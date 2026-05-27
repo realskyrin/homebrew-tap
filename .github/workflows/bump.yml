@@ -1,0 +1,61 @@
+name: Bump capcap
+
+on:
+  repository_dispatch:
+    types: [capcap_release_published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: capcap version without the leading v
+        required: true
+        type: string
+      sha256:
+        description: SHA-256 of the published capcap macOS zip
+        required: true
+        type: string
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update capcap.rb
+        env:
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+          DISPATCH_SHA256: ${{ github.event.client_payload.sha256 }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_SHA256: ${{ inputs.sha256 }}
+        run: |
+          set -euo pipefail
+          version="${DISPATCH_VERSION:-${INPUT_VERSION:-}}"
+          sha256="${DISPATCH_SHA256:-${INPUT_SHA256:-}}"
+
+          if [ -z "$version" ] || [ -z "$sha256" ]; then
+            echo "version and sha256 are required" >&2
+            exit 1
+          fi
+
+          bash scripts/generate-capcap-cask.sh "$version" "$sha256"
+          ruby -c Casks/capcap.rb
+
+      - name: Commit and push
+        env:
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- Casks/capcap.rb; then
+            echo "No capcap cask changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          version="${DISPATCH_VERSION:-${INPUT_VERSION:-}}"
+          git add Casks/capcap.rb
+          git commit -m "capcap ${version}"
+          git push
