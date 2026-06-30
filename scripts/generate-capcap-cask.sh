@@ -22,6 +22,11 @@ cask "capcap" do
   desc "Lightweight native menu bar screenshot tool"
   homepage "https://github.com/realskyrin/capcap"
 
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
   depends_on macos: :sonoma
 
   app "capcap.app"
