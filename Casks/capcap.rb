@@ -1,16 +1,11 @@
 cask "capcap" do
-  version "1.6.1"
-  sha256 "ec754686454cc5578aa5c5d482e20132f87c9a2e33519c2a33f4123031938c8a"
+  version "1.6.2"
+  sha256 "e344b21184634f4814ec6acda7a12fa6bdcc87a9f156062b42417984ee3d0fe1"
 
   url "https://github.com/realskyrin/capcap/releases/download/release-v#{version}/capcap-#{version}-macos.zip"
   name "capcap"
   desc "Lightweight native menu bar screenshot tool"
   homepage "https://github.com/realskyrin/capcap"
-
-  livecheck do
-    url :url
-    strategy :github_latest
-  end
 
   depends_on macos: :sonoma
 
