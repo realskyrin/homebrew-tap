@@ -27,6 +27,7 @@ brew install --cask <cask>
 ## Casks
 
 - `capcap` - lightweight native menu bar screenshot tool.
+- `clipcap` - permission-light Mac image annotation tool.
 
 ## Maintainer Flow
 
@@ -36,10 +37,16 @@ Regenerate the capcap cask from the published GitHub Release asset checksum:
 bash scripts/generate-capcap-cask.sh <version> <sha256>
 ruby -c Casks/capcap.rb
 brew audit --cask --strict --online realskyrin/tap/capcap
+
+bash scripts/generate-clipcap-cask.sh <version> <sha256>
+ruby -c Casks/clipcap.rb
+brew audit --cask --strict --online realskyrin/tap/clipcap
 ```
 
 The capcap release workflow can dispatch `capcap_release_published` with
 `version` and `sha256` when its `HOMEBREW_TAP_TOKEN` secret is configured.
+The clipcap release workflow uses `clipcap_release_published` with the same
+payload shape.
 
 ## Update
 
