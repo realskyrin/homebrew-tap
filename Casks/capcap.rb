@@ -1,6 +1,6 @@
 cask "capcap" do
-  version "1.7.11"
-  sha256 "fec31f46d86b131abd267e77149977da9d956dbd1d91d61bc0b02d98e783d221"
+  version "1.7.12"
+  sha256 "c8e136b140e9cda738627c246493b88d8b61f6e09f43ec53e05593bbede7d179"
 
   url "https://github.com/realskyrin/capcap/releases/download/release-v#{version}/capcap-#{version}-macos.zip"
   name "capcap"
