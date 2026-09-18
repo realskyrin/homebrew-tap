@@ -1,6 +1,6 @@
 cask "clipcap" do
-  version "1.8.33"
-  sha256 "e350eb771b3b42cacd7e23683b511506ea0764c66ae3adfac840027fe542fe47"
+  version "1.8.34"
+  sha256 "ec03f43c5704f6b64cacdf3bccd54e016af44b1172489c6c969c3b5d2f5b2146"
 
   url "https://github.com/realskyrin/clipcap/releases/download/release-v#{version}/clipcap-#{version}-macos.zip"
   name "clipcap"
