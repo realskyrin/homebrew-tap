@@ -16,6 +16,12 @@ cask "clipcap" do
 
   app "clipcap.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/clipcap.app"]
+    end
+  end
+
   uninstall quit: "cn.skyrin.clipcap"
 
   zap trash: "~/Library/Preferences/cn.skyrin.clipcap.plist"

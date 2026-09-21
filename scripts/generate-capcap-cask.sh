@@ -12,7 +12,7 @@ OUTPUT_PATH="${3:-Casks/capcap.rb}"
 
 mkdir -p "$(dirname "${OUTPUT_PATH}")"
 
-cat >"${OUTPUT_PATH}" <<EOF
+cat > "${OUTPUT_PATH}" << EOF
 cask "capcap" do
   version "${VERSION}"
   sha256 "${SHA256}"
@@ -30,6 +30,12 @@ cask "capcap" do
   depends_on macos: :sonoma
 
   app "capcap.app"
+
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/capcap.app"]
+    end
+  end
 
   uninstall quit: "cn.skyrin.capcap"
 
