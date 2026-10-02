@@ -12,7 +12,7 @@ OUTPUT_PATH="${3:-Casks/clipcap.rb}"
 
 mkdir -p "$(dirname "${OUTPUT_PATH}")"
 
-cat >"${OUTPUT_PATH}" <<EOF
+cat > "${OUTPUT_PATH}" << EOF
 cask "clipcap" do
   version "${VERSION}"
   sha256 "${SHA256}"
@@ -30,6 +30,12 @@ cask "clipcap" do
   depends_on macos: :sonoma
 
   app "clipcap.app"
+
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/clipcap.app"]
+    end
+  end
 
   uninstall quit: "cn.skyrin.clipcap"
 
