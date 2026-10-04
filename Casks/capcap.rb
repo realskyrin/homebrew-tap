@@ -16,6 +16,12 @@ cask "capcap" do
 
   app "capcap.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/capcap.app"]
+    end
+  end
+
   uninstall quit: "cn.skyrin.capcap"
 
   zap trash: "~/Library/Preferences/cn.skyrin.capcap.plist"
